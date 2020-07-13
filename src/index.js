@@ -94,3 +94,7 @@ class Board extends React.Component {
     document.getElementById('root')
   );
   
+  let myName = "Auston";
+  var name = myName.toUpperCase();
+  console.log(name)
+  //Left off tutorial on 'Why Immutability Is Important" https://reactjs.org/tutorial/tutorial.html#setup
