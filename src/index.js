@@ -60,8 +60,14 @@ class Board extends React.Component {
     }
   
     render() {
-      const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-  
+      //const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      const winner = calculateWinner(this.state.squares);
+      let status;
+      if (winner) {
+        status = "Winner: " + winner;
+      } else {
+        status = "Next player: " + (this.state.xIsNext ? 'X' : 'O');
+      }
       return (
         <div>
           <div className="status">{status}</div>
@@ -108,7 +114,25 @@ class Board extends React.Component {
     document.getElementById('root')
   );
   
-  let myName = "Auston";
-  var name = myName.toUpperCase();
-  console.log(name)
+function calculateWinner (squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 5, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i=0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+
+  return null;
+}
+
   //Left off tutorial on 'Why Immutability Is Important" https://reactjs.org/tutorial/tutorial.html#setup
