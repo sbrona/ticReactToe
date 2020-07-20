@@ -2,38 +2,52 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-class Square extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         value: null,
-    //     };
-    // }
+// class Square extends React.Component {
+//     // constructor(props) {
+//     //     super(props);
+//     //     this.state = {
+//     //         value: null,
+//     //     };
+//     // }
 
-    render() {
-      return (
-        <button 
-            className="square" 
-            onClick={() => this.props.onClick({value: 'X'})   /*{function() {alert('click');} making an interactive component using an arrow function (=>)*/   }
-        >
-            {this.props.value  /*this.props.value <--passing data through props (from Board to Square)*/} 
-        </button>
-      );
-    }
-  }
+//     render() {
+//       return (
+//         <button 
+//             className="square" 
+//             onClick={() => this.props.onClick({value: 'X'})   /*{function() {alert('click');} making an interactive component using an arrow function (=>)*/   }
+//         >
+//             {this.props.value  /*this.props.value <--passing data through props (from Board to Square)*/} 
+//         </button>
+//       );
+//     }
+//   }
+
+//Function below replaces the Class above (for simplicity)
+
+function Square (props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
+};
   
 class Board extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             squares: Array(9).fill(null),
+            xIsNext: true,
         };
     }
 
     handleClick(i) {
         const squares = this.state.squares.slice();
-        squares[i] = 'X';
-        this.setState({squares: squares});
+        squares[i] = this.state.xIsNext ? 'X' : 'O';
+        this.setState({
+          squares: squares,
+          xIsNext: !this.state.xIsNext,
+        });
     }
 
     renderSquare(i) {
@@ -46,7 +60,7 @@ class Board extends React.Component {
     }
   
     render() {
-      const status = 'Next player: X';
+      const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
   
       return (
         <div>
